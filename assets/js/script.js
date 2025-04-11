@@ -7,14 +7,13 @@ function calculateDateDiff(date1, date2) {
 }
 
 function displayDateDiff(elementId, date1, date2) {
-  // Takes the result of the previous function and displays it in the HTML element with id "my-element"
-  // and "my-element2" respectively.
+  // Takes the result of the previous function and displays it in the HTML elements with corresponding id's
   var daysRemaining = calculateDateDiff(date1, date2);
   var htmlElement = document.getElementById(elementId);
   htmlElement.innerText = daysRemaining;
 }
 
 // Display the countdowns
-displayDateDiff("my-element", dates[0], dates[1]); // Christmas countdown
-displayDateDiff("my-element2", dates[0], dates[2]); // New Year countdown
-displayDateDiff("my-element3", dates[0], dates[3]); // Valentines Day countdown
+for (let i = 1; i < dates.length; i++) {
+  displayDateDiff(`my-element${i}`, dates[0], dates[i]);
+}
