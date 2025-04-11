@@ -1,10 +1,8 @@
-var today = new Date(); // Get the current date
-var christmas = new Date("2025-12-25"); // Set the date for Christmas
-var newYear = new Date("2026-01-01"); // Set the date for New Year
+const dates = [new Date(), new Date("2025-12-25"), new Date("2026-01-01")]; // Array of dates to be used in the countdown
 
 function calculateDateDiff(date1, date2) {
   // Calculates the difference between two dates and returns the result in days.
-  var numDay = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
+  const numDay = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
   return numDay;
 }
 
@@ -16,6 +14,6 @@ function displayDateDiff(elementId, date1, date2) {
   htmlElement.innerText = daysRemaining;
 }
 
-// Display the countdown for Christmas and New Year
-displayDateDiff("my-element", today, christmas);
-displayDateDiff("my-element2", today, newYear);
+// Display the countdowns
+displayDateDiff("my-element", dates[0], dates[1]); // Christmas countdown
+displayDateDiff("my-element2", dates[0], dates[2]); // New Year countdown
