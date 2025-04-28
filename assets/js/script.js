@@ -20,6 +20,9 @@ const dates = [
   newDate(`${currentYear}-12-25`),
   newDate(`${currentYear}-01-01`),
   newDate(`${currentYear}-02-14`),
+  newDate(`${currentYear}-10-31`),
+  newDate(`${currentYear}-03-17`),
+  newDate(`${currentYear}-11-05`),
 ];
 
 function calculateDateDiff(date1, date2) {
@@ -39,3 +42,70 @@ function displayDateDiff(elementId, date1, date2) {
 for (let i = 1; i < dates.length; i++) {
   displayDateDiff(`my-element${i}`, dates[0], dates[i]);
 }
+
+// --- Reorder cards based on soonest date ---
+
+
+function findCardByTitle(title) {
+  // Finds card by their title
+  const allCards = document.querySelectorAll('.card');
+  for (let card of allCards) {
+    const cardTitle = card.querySelector('.card-title');
+    if (cardTitle && cardTitle.textContent.includes(title)) {
+      return card.closest('.col-12');
+    }
+  }
+  return null;
+}
+
+// Define events
+const events = [
+  {
+    title: "Christmas",
+    date: newDate(`${currentYear}-12-25`),
+    card: null
+  },
+  {
+    title: "New Year",
+    date: newDate(`${currentYear}-01-01`),
+    card: null
+  },
+  {
+    title: "Valentine's",
+    date: newDate(`${currentYear}-02-14`),
+    card: null
+  },
+  {
+    title: "Halloween",
+    date: newDate(`${currentYear}-10-31`),
+    card: null
+  },
+  {
+    title: "St. Patrick's",
+    date: newDate(`${currentYear}-03-17`),
+    card: null
+  },
+  {
+    title: "Bonfire Night",
+    date: newDate(`${currentYear}-11-05`),
+    card: null
+  },
+];
+
+// Attach card elements to events
+events.forEach(event => {
+  event.card = findCardByTitle(event.title);
+});
+
+// Sort events by soonest date
+events.sort((a, b) => a.date - b.date);
+
+// Build fragment and re-append cards
+const row = document.querySelector('.row');
+const fragment = document.createDocumentFragment();
+events.forEach(event => {
+  if (event.card) {
+    fragment.appendChild(event.card);
+  }
+});
+row.appendChild(fragment);
