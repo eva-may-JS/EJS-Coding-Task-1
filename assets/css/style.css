@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
-    font-family: arial;
+    font-family: montserrat, sans-serif;
   }
 
 html, body {
@@ -17,8 +19,15 @@ header {
   color: #fbfbf9;
   padding: 15px 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column; /* default for mobile */
+  align-items: center;
+  justify-content: center;
 }
 
+h1 {
+  font-family: lora, sans-serif;
+}
 
 h2 {
   color: #fbfbf9;
@@ -59,15 +68,42 @@ footer {
 
 #dark-overlay {
   /* Adds a semi-transparent dark overlay for better contrast */
-  margin: 0 auto; /* Centers horizontally */
+  margin: 1rem auto 1.5rem; /* Centers horizontally, allows breathing space at top and bottom */
   padding: 10px;
   width: 90%;
   border-radius: 5px;
   background-color: rgba(54, 43, 55, 0.7);
 }
 
+#logo {
+  width: 75px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
 /* MEDIA QUERIES */
-/* Media query: laptops and larger */
+
+/* For tablets and larger: display logo and website title side by side */
+@media screen and (min-width: 768px) {
+  header {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  #logo {
+    margin-bottom: 0;
+    margin-right: 20px;
+    width: 90px;
+    height: 70px;
+  }
+
+  header h1 {
+    margin: 0;
+  }
+}
+
+/* For laptops and larger: Reduce width of the main section title */
 @media screen and (min-width: 1024px) {
   #dark-overlay {
     width: 60%;
