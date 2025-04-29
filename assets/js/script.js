@@ -1,106 +1,67 @@
-const currentYear = new Date().getFullYear(); // Current year
+const currentYear = new Date().getFullYear();
 
-function newDate(dateString) {
-  // Takes a date string in the format YYYY-MM-DD and returns a Date object.
-  // If the date is in the past, it will return the same date in the next year.
-  const date = new Date(dateString); // Convert the input string to a Date object
+// Helper: Return a Date object for a given YYYY-MM-DD string.
+// If that date has already passed this year, return the same date next year.
+function getFutureDate(dateString) {
+  const date = new Date(dateString);
   const now = new Date();
 
-  // If the date has already passed this year, bump it to next year
+  // Adjust to next year if the date is in the past
   if (date < now) {
     return new Date(currentYear + 1, date.getMonth(), date.getDate());
-  } else {
-    return date;
+  }
+  return date;
+}
+
+// Calculate the number of full days between two dates
+function getDaysBetween(fromDate, toDate) {
+  const msPerDay = 1000 * 60 * 60 * 24;
+  return Math.round((toDate - fromDate) / msPerDay);
+}
+
+// Display countdown in element with specified ID
+function displayCountdown(elementId, fromDate, toDate) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.innerText = getDaysBetween(fromDate, toDate);
   }
 }
 
-// Array of dates to be used in the countdown
-const dates = [
-  new Date(),
-  newDate(`${currentYear}-12-25`),
-  newDate(`${currentYear}-01-01`),
-  newDate(`${currentYear}-02-14`),
-  newDate(`${currentYear}-10-31`),
-  newDate(`${currentYear}-03-17`),
-  newDate(`${currentYear}-11-05`),
-];
-
-function calculateDateDiff(date1, date2) {
-  // Calculates the difference between two dates and returns the result in days.
-  const numDay = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
-  return numDay;
-}
-
-function displayDateDiff(elementId, date1, date2) {
-  // Takes the result of the previous function and displays it in the HTML elements with corresponding id's
-  const daysRemaining = calculateDateDiff(date1, date2);
-  const htmlElement = document.getElementById(elementId);
-  htmlElement.innerText = daysRemaining;
-}
-
-// Display the countdowns
-for (let i = 1; i < dates.length; i++) {
-  displayDateDiff(`my-element${i}`, dates[0], dates[i]);
-}
-
-// --- Reorder cards based on soonest date ---
-
-
+// Find a card element by its title
 function findCardByTitle(title) {
-  // Finds card by their title
-  const allCards = document.querySelectorAll('.card');
-  for (let card of allCards) {
-    const cardTitle = card.querySelector('.card-title');
-    if (cardTitle && cardTitle.textContent.includes(title)) {
+  const cards = document.querySelectorAll('.card');
+  for (let card of cards) {
+    const titleElement = card.querySelector('.card-title');
+    if (titleElement && titleElement.textContent.includes(title)) {
       return card.closest('.col-12');
     }
   }
   return null;
 }
 
-// Define events
+// Define all holiday events
 const events = [
-  {
-    title: "Christmas",
-    date: newDate(`${currentYear}-12-25`),
-    card: null
-  },
-  {
-    title: "New Year",
-    date: newDate(`${currentYear}-01-01`),
-    card: null
-  },
-  {
-    title: "Valentine's",
-    date: newDate(`${currentYear}-02-14`),
-    card: null
-  },
-  {
-    title: "Halloween",
-    date: newDate(`${currentYear}-10-31`),
-    card: null
-  },
-  {
-    title: "St. Patrick's",
-    date: newDate(`${currentYear}-03-17`),
-    card: null
-  },
-  {
-    title: "Bonfire Night",
-    date: newDate(`${currentYear}-11-05`),
-    card: null
-  },
+  { title: "Christmas", date: getFutureDate(`${currentYear}-12-25`) },
+  { title: "New Year", date: getFutureDate(`${currentYear}-01-01`) },
+  { title: "Valentine's", date: getFutureDate(`${currentYear}-02-14`) },
+  { title: "Halloween", date: getFutureDate(`${currentYear}-10-31`) },
+  { title: "St. Patrick's", date: getFutureDate(`${currentYear}-03-17`) },
+  { title: "Bonfire Night", date: getFutureDate(`${currentYear}-11-05`) },
 ];
 
-// Attach card elements to events
+// Display all countdowns
+const today = new Date();
+events.forEach((event, index) => {
+  displayCountdown(`my-element${index + 1}`, today, event.date);
+});
+
+// Attach matching card elements and sort events by soonest date
 events.forEach(event => {
   event.card = findCardByTitle(event.title);
 });
-
-// Sort events by soonest date
 events.sort((a, b) => a.date - b.date);
 
-// Build fragment and re-append cards
+// Reorder the card elements visually based on sorted events
 const row = document.querySelector('.row');
 const fragment = document.createDocumentFragment();
 events.forEach(event => {

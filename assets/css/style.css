@@ -1,17 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-* {
-    font-family: montserrat, sans-serif;
-  }
-
 html, body {
+  font-family: montserrat, sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
   background: url("../images/background-ancient-calendar.png") no-repeat center center fixed;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
 }
 
 header {
@@ -39,14 +33,7 @@ main {
   padding: 20px;
   margin: 30px auto;
   flex: 1;
-}
-
-#dark-overlay > p {
-  font-size: 1.2em;
-  line-height: 1.5;
-  margin: 20px auto;
-  max-width: 600px;
-  color: #fbfbf9;
+  text-align: center;
 }
 
 footer {
@@ -72,6 +59,12 @@ footer {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+#logo {
+  width: 75px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
 #dark-overlay {
   /* Adds a semi-transparent dark overlay for better contrast */
   margin: 1rem auto 1.5rem; /* Centers horizontally, allows breathing space at top and bottom */
@@ -81,11 +74,14 @@ footer {
   background-color: rgba(54, 43, 55, 0.7);
 }
 
-#logo {
-  width: 75px;
-  height: 60px;
-  margin-bottom: 10px;
+#dark-overlay > p {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin: 20px auto;
+  max-width: 600px;
+  color: #fbfbf9;
 }
+
 
 /* MEDIA QUERIES */
 
@@ -96,16 +92,16 @@ footer {
     justify-content: flex-start;
     text-align: left;
   }
+  
+  header h1 {
+    margin: 0;
+  }
 
   #logo {
     margin-bottom: 0;
     margin-right: 20px;
     width: 90px;
     height: 70px;
-  }
-
-  header h1 {
-    margin: 0;
   }
 }
 
